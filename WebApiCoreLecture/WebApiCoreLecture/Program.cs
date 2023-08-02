@@ -9,6 +9,13 @@ builder.Services.AddControllers();
 //Injecting DbContext Service
 builder.Services.AddDbContext<EmployeeContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("EmpCon")));
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
+//CORS
+builder.Services.AddCors(option => option.AddPolicy("MyPolicy", option =>
+{
+    option.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+}));
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
