@@ -28,7 +28,30 @@ namespace WebApiCoreLecture.Controllers
           {
               return NotFound();
           }
-            return await _context.tblEmployees.ToListAsync();
+            //return await _context.tblEmployees.ToListAsync();
+
+            var employees = (from e in _context.tblEmployees
+                             join d in _context.tblDesignations
+                             on e.DesignationId equals d.Id
+
+                             select new TblEmployee()
+                             {
+                                 Id=e.Id,
+                                 Name=e.Name,
+                                 LastName=e.LastName,
+                                 Email=e.Email,
+                                 Doj=e.Doj,
+                                 Age=e.Age,
+                                 Genedr=e.Genedr,
+                                 IsMarried=e.IsMarried,
+                                 IsActive=e.IsActive,
+                                 DesignationId=e.DesignationId,
+                                 Designation=d.Designation
+                             }).ToListAsync();
+
+            return await (employees);
+
+            
         }
 
         // GET: api/Employees/5
